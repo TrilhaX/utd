@@ -17,7 +17,7 @@ local Window = Library:CreateWindow({
     MenuFadeTime = 0.2
 })
 
-Library:Notify('Loading Grand Piece Online Script', 5)
+Library:Notify('Loading Ultimate Tower Defense Script', 5)
 warn('[TEMPEST HUB] Loading Function')
 wait(1)
 warn('[TEMPEST HUB] Loading Toggles')
@@ -44,17 +44,95 @@ end
 
 function autojoinmap()
     while getgenv().autojoinmap == true do
+        local teleporter = workspace.Lobby.ClassicPartyTeleporters.Teleporter3.Collider
+        local TweenService = game:GetService("TweenService")
+        local speed = 1000
+
+        -- Function to tween a model to a target CFrame
+        local function tweenModel(model, targetCFrame)
+            if not model.PrimaryPart then
+                warn("PrimaryPart is not set for the model")
+                return
+            end
+            
+            local duration = (model.PrimaryPart.Position - targetCFrame.Position).Magnitude / speed
+            local info = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+            
+            local cframeValue = Instance.new("CFrameValue")
+            cframeValue.Value = model:GetPrimaryPartCFrame()
+            
+            cframeValue:GetPropertyChangedSignal("Value"):Connect(function()
+                model:SetPrimaryPartCFrame(cframeValue.Value)
+            end)
+            
+            local tween = TweenService:Create(cframeValue, info, {
+                Value = targetCFrame,
+            })
+            
+            tween:Play()
+            tween.Completed:Connect(function()
+                cframeValue:Destroy()
+            end)
+            
+            return tween
+        end
+
+        -- Function to get a CFrame based on different types of input
+        local function GetCFrame(obj, height, angle)
+            local cframe = CFrame.new()
+
+            if typeof(obj) == "Vector3" then
+                cframe = CFrame.new(obj)
+            elseif typeof(obj) == "table" then
+                cframe = CFrame.new(unpack(obj))
+            elseif typeof(obj) == "string" then
+                local parts = {}
+                for val in obj:gmatch("[^,]+") do
+                    table.insert(parts, tonumber(val))
+                end
+                if #parts >= 3 then
+                    cframe = CFrame.new(unpack(parts))
+                end
+            elseif typeof(obj) == "Instance" then
+                if obj:IsA("Model") then
+                    local rootPart = obj:FindFirstChild("HumanoidRootPart") or obj:FindFirstChild("Torso")
+                    if rootPart then
+                        cframe = rootPart.CFrame
+                    end
+                elseif obj:IsA("Part") then
+                    cframe = obj.CFrame
+                end
+            end
+
+            -- Apply height and angle adjustments
+            if height then
+                cframe = cframe + Vector3.new(0, height, 0)
+            end
+            if angle then
+                cframe = cframe * CFrame.Angles(0, math.rad(angle), 0)
+            end
+            
+            return cframe
+        end
+
+        local teleporterframe = GetCFrame(teleporter)
+        local tween = tweenModel(game.Players.LocalPlayer.Character, teleporterframe)
+        tween.Completed:Wait()
+        
         local args = {
-        [1] = selectedMapJoin
+            [1] = selectedMapJoin
         }
     
         game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerSelectedMap"):FireServer(unpack(args))
-        local args = {
+        
+        args = {
             [1] = selectedMapDifficultyJoin
         }
         
         game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerSelectedGamemode"):FireServer(unpack(args))
+        
         game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerQuickstartTeleport"):FireServer()
+        
         wait()
     end
 end
