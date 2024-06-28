@@ -1,0 +1,544 @@
+warn('[TEMPEST HUB] Loading Bypass')
+wait(1)
+warn('[TEMPEST HUB] Loading Ui')
+wait(1)
+local repo = 'https://raw.githubusercontent.com/TrapstarKSSKSKSKKS/LinoriaLib/main/'
+
+local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
+local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
+local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+Library:Notify('Welcome to Tempest Hub', 5)
+
+local Window = Library:CreateWindow({
+    Title = 'Tempest Hub | Ultimate Tower Defense',
+    Center = true,
+    AutoShow = true,
+    TabPadding = 8,
+    MenuFadeTime = 0.2
+})
+
+Library:Notify('Loading Grand Piece Online Script', 5)
+warn('[TEMPEST HUB] Loading Function')
+wait(1)
+warn('[TEMPEST HUB] Loading Toggles')
+wait(1)
+warn('[TEMPEST HUB] Last Checking')
+wait(1)
+
+function autorollbaner()
+    while getgenv().autorollbaner == true do
+        local args = {
+            [1] = "Quests",
+            [2] = 0
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerSetNotifications"):FireServer(unpack(args))        
+        local args = {
+            [1] = selectednumberoll
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerBuyTower"):FireServer(unpack(args))
+        wait()
+    end
+end
+
+function autojoinmap()
+    while getgenv().autojoinmap == true do
+        local args = {
+        [1] = selectedMapJoin
+        }
+    
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerSelectedMap"):FireServer(unpack(args))
+        local args = {
+            [1] = selectedMapDifficultyJoin
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerSelectedGamemode"):FireServer(unpack(args))
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerQuickstartTeleport"):FireServer()
+        wait()
+    end
+end
+
+
+function autostartmatch()
+    while getgenv().autostartmatch == true do
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerVoteToStartMatch"):FireServer()
+        wait()
+    end
+end
+
+function autoleave()
+    while getgenv().autoleave == true do
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerVoteReturn"):FireServer()
+        wait()
+    end
+end
+
+function autoskipwave()
+    while getgenv().autoskipwave == true do
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerReadyForNextWave"):FireServer()
+        wait()
+    end 
+end
+
+function autorep()
+    while getgenv().autorep == true do
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerVoteReplay"):FireServer()
+        wait()
+    end
+end
+
+function autofish()
+    while getgenv().autofish == true do
+        local args = {
+            [1] = "Quests",
+            [2] = 0
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerSetNotifications"):FireServer(unpack(args))        
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerCatchFish"):FireServer()
+        wait()
+    end
+end
+
+function hideplayerinfo()
+    while getgenv().hideplayerinfo == true do
+        local barradexp = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.HUD.Toolbox.LevelBar
+        local currencies = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.HUD.Currencies
+        local gold = currencies.Gold
+        local gem = currencies.Gem
+        local xp = barradexp.Exp
+        local level = barradexp.Level
+        local fill = barradexp.Fill
+        
+        if xp and level and fill and gold and gem then
+            xp.Text = "TempestHubOnTop"
+            level.Text = "TempestHubOnTop"
+            fill.Size = UDim2.new(1, 0, fill.Size.Y.Scale, fill.Size.Y.Offset)
+            gem.amount.Text = 9999999999
+            gold.amount.Text = 9999999999
+        else
+            wait()
+        end
+        
+        local player = game.Players.LocalPlayer
+        local Character = player.Character
+        local Billboard = workspace.TempestGpo2.HumanoidRootPart.PlayerOverheadGui.Frame
+
+        -- Espera as partes específicas do personagem carregarem
+        local Head = Character:WaitForChild("Head")
+        local Hair = Character:FindFirstChild("Hair")
+
+        -- Verifica se as partes existem antes de tentar alterá-las
+        if Character:FindFirstChild("Pants") then
+            Character.Pants.PantsTemplate = "rbxassetid://1"
+        end
+
+        if Character:FindFirstChild("Shirt") then
+            Character.Shirt.ShirtTemplate = "rbxassetid://1"
+        end
+
+        if Hair and Hair:FindFirstChildOfClass("SpecialMesh") then
+            local mesh = Hair:FindFirstChildOfClass("SpecialMesh")
+            mesh.MeshId = "rbxassetid://1"
+            mesh.TextureId = "rbxassetid://1"
+        end
+
+        if Head:FindFirstChildOfClass("Decal") then
+            local face = Head:FindFirstChildOfClass("Decal")
+            face.Texture = "rbxassetid://1"
+        end
+
+        if Billboard then
+            Billboard.GroupRank.Text = "TempestHubOnTop"
+            Billboard.Level.Text = "999999999999999999"
+            Billboard.Username.Text = "TempestHubOnTop"
+            Billboard.Misc.Text = "TempestHubOnTop"
+        else
+            wait()
+        end
+
+        if Character then
+           Character.NarutoHair:Destroy() 
+        end
+
+        local hotbar = player.PlayerGui.MainGui.HUD.Toolbox.Hotbar
+        local blacklist = {
+            "UIListLayout",
+            "Template",
+            "TowerSlotTemplate"
+        }
+
+-- Função para verificar se um item está na blacklist
+    local function isBlacklisted(itemName)
+        for _, blacklistedName in ipairs(blacklist) do
+            if itemName == blacklistedName then
+                return true
+            end
+        end
+        return false
+    end
+
+-- Iterando por todas as crianças do hotbar
+        for _, child2 in ipairs(hotbar:GetChildren()) do
+            if not isBlacklisted(child2.Name) then
+                child2.ImageLabel.Image = "rbxassetid://1"
+            end
+        end
+        wait()
+    end
+end
+
+function autoupgrade()
+    while getgenv().autoupgrade == true do
+        local ValuesUnitGameID = {}
+        local units = workspace.EntityColliders.Towers
+        local children = units:GetChildren()
+
+        for _, child4 in ipairs(children) do
+            local unitsvalue = child4.entityId
+            local args = {
+                [1] = unitsvalue.Value
+            }
+            
+            game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerUpgradeTower"):FireServer(unpack(args))
+        end
+        wait()
+    end
+end
+
+
+local Valuesmapsjoin = {}
+local maps = game:GetService("ReplicatedStorage").Modules.Item.Map
+local children = maps:GetChildren()
+
+for _, child in ipairs(children) do
+    table.insert(Valuesmapsjoin, child.Name)
+end
+
+-- Definindo tabelas para armazenar os valores
+local ValuesIDUnit = {}
+local ValuesLevelUnit = {}
+local ValuesNameUnit = {}
+
+-- Obter o jogador e a barra de ferramentas
+local player = game:GetService("Players").LocalPlayer
+local hotbar = player.PlayerGui.MainGui.HUD.Toolbox.Hotbar
+
+-- Definindo a blacklist
+local blacklist = {
+    "UIListLayout",
+    "Template",
+    "TowerSlotTemplate"
+}
+
+-- Função para verificar se um item está na blacklist
+local function isBlacklisted(itemName)
+    for _, blacklistedName in ipairs(blacklist) do
+        if itemName == blacklistedName then
+            return true
+        end
+    end
+    return false
+end
+
+-- Iterando por todas as crianças do hotbar
+for _, child2 in ipairs(hotbar:GetChildren()) do
+    if not isBlacklisted(child2.Name) then
+        local levelunit = child2.Level.Text
+        local nameunit = child2.NameLabel.Text
+        table.insert(ValuesIDUnit, child2.Name)
+        table.insert(ValuesLevelUnit, levelunit)
+        table.insert(ValuesNameUnit, nameunit)
+    else
+        wait()
+    end
+end
+
+local ValuesTrait = {}
+local maps = game:GetService("ReplicatedStorage").Modules.Item.Trait
+local children = maps:GetChildren()
+
+for _, child3 in ipairs(children) do
+    table.insert(ValuesTrait, child3.Name)
+end
+
+
+local unitOptions = {}
+for i = 1, #ValuesNameUnit do
+    local unitName = ValuesNameUnit[i]
+    table.insert(unitOptions, unitName .. " | Level: " .. ValuesLevelUnit[i] .. " | ID: " .. ValuesIDUnit[i])
+end
+
+function autorolltrait()
+    while getgenv().autorolltrait == true do
+        if selectedUnit then
+            local index = nil
+            for i, name in ipairs(ValuesNameUnit) do
+                if name == selectedUnit then
+                    index = i
+                    break
+                end
+            end
+            
+            local textWithTags = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrames.Inventory.RerollTraitFrame.Main.Info.CurrentTrait.Text
+            local cleanedText = textWithTags:gsub("<[^>]+>", ""):match("^%s*(.-)%s*%(")
+            local rerolltraitgui = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrames.Inventory.RerollTraitFrame
+            rerolltraitgui.Visible = true
+
+            if index and selectedTrait ~= cleanedText then
+                local IDUnit = ValuesIDUnit[index]
+                local args = {
+                    [1] = IDUnit
+                }
+            
+                game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerRerollTower"):FireServer(unpack(args))
+            elseif index and selectedTrait == cleanedText then
+                print("Pegou")
+            else
+                print("Iiiih rapaz")
+            end
+        else
+            print("No selected unit.")
+        end
+        
+        wait() -- Espera um pouco antes de verificar novamente
+    end
+end
+
+local Tabs = {
+    Main = Window:AddTab('Main'),
+}
+
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Player')
+
+LeftGroupBox:AddToggle('AutoStart', {
+    Text = 'Auto Start',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autostartmatch = Value
+        autostartmatch()
+    end
+})
+
+LeftGroupBox:AddToggle('AutoSkipWave', {
+    Text = 'Auto Skip Wave',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autoskipwave = Value
+        autoskipwave()
+    end
+})
+
+LeftGroupBox:AddToggle('AutoReplay', {
+    Text = 'Auto Replay',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autorep = Value
+        autorep()
+    end
+})
+
+LeftGroupBox:AddToggle('AutoLeave', {
+    Text = 'Auto Leave',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autoleave = Value
+        autoleave()
+    end
+})
+
+LeftGroupBox:AddToggle('AutoFish', {
+    Text = 'Auto Fish',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autofish = Value
+        autofish()
+    end
+})
+
+LeftGroupBox:AddToggle('HidePlayerInfo', {
+    Text = 'Hide Player Info',
+    Default = false,
+    Callback = function(Value)
+        getgenv().hideplayerinfo = Value
+        hideplayerinfo()
+    end
+})
+
+local RightGroupBox = Tabs.Main:AddRightGroupbox('Farm')
+
+RightGroupBox:AddDropdown('CMTJ', {
+    Values = Valuesmapsjoin,
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Map To Join',
+    Callback = function(value)
+        selectedMapJoin = value
+    end
+})
+
+RightGroupBox:AddDropdown('CDTJ', {
+    Values = {"Classic", "Hard", "Infinite"},
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Difficulty To Join',
+    Callback = function(value)
+        selectedMapDifficultyJoin = value
+    end
+})
+
+RightGroupBox:AddToggle('AutoJoinMap', {
+    Text = 'Auto Join',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autojoinmap = Value
+        autojoinmap()
+    end
+})
+
+RightGroupBox:AddToggle('AutoUpgradeUnit', {
+    Text = 'Auto Upgrade Unit',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autoupgrade = Value
+        autoupgrade()
+    end
+})
+
+local Tabs = {
+    Main = Window:AddTab('Shop'),
+}
+
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Summon')
+
+LeftGroupBox:AddDropdown('CQTS', {
+    Values = {1, 10},
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Quantity To Summon',
+    Callback = function(value)
+        selectednumberoll = value
+    end
+})
+
+LeftGroupBox:AddToggle('AutoRollBanner', {
+    Text = 'Auto Roll',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autorollbaner = Value
+        autorollbaner()
+    end
+})
+
+local RightGroupBox = Tabs.Main:AddRightGroupbox('Unit')
+
+RightGroupBox:AddDropdown('CRPU', {
+    Values = unitOptions,
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Unit To Roll',
+    Callback = function(value)
+        -- Extrair apenas o nome da unidade
+        local unitName = value:match("^(.-) | Level:")
+        selectedUnit = unitName
+    end
+})
+
+RightGroupBox:AddDropdown('CTTR', {
+    Values = ValuesTrait,
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Trait To Roll',
+    Callback = function(value)
+        selectedTrait = value
+    end
+})
+
+RightGroupBox:AddToggle('AutoRollTrait', {
+    Text = 'Auto Roll Trait',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autorolltrait = Value
+        autorolltrait()
+    end
+})
+
+local FrameTimer = tick()
+local FrameCounter = 0
+local FPS = 60
+
+local WatermarkConnection
+
+-- Create a function to update FPS and ping information
+local function UpdateWatermark()
+    FrameCounter = FrameCounter + 1
+
+    if (tick() - FrameTimer) >= 1 then
+        FPS = FrameCounter
+        FrameTimer = tick()
+        FrameCounter = 0
+    end
+
+    Library:SetWatermark(('Tempest Hub | %s fps | %s ms'):format(
+        math.floor(FPS),
+        math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue())
+    ))
+end
+
+-- Connect the function to the RenderStepped event
+WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(UpdateWatermark)
+
+-- Create tabs for UI settings
+local TabsUI = {
+    ['UI Settings'] = Window:AddTab('UI Settings'),
+}
+
+-- Unload function
+local function Unload()
+    WatermarkConnection:Disconnect()
+    print('Unloaded!')
+    Library.Unloaded = true
+end
+
+-- UI Settings
+local MenuGroup = TabsUI['UI Settings']:AddLeftGroupbox('Menu')
+
+-- Add an unload button
+MenuGroup:AddButton('Unload', Unload)
+
+-- Add a label and key picker for the menu keybind
+MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' })
+
+-- Define the ToggleKeybind variable
+Library.ToggleKeybind = Options.MenuKeybind
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+ThemeManager:SetFolder('Tempest Hub')
+SaveManager:SetFolder('Tempest Hub/_U_T_D')
+
+SaveManager:BuildConfigSection(TabsUI['UI Settings'])
+
+ThemeManager:ApplyToTab(TabsUI['UI Settings'])
+
+SaveManager:LoadAutoloadConfig()
+
+local GameConfigName = '_U_T_D'
+local player = game.Players.LocalPlayer
+SaveManager:Load(player.Name .. GameConfigName)
+spawn(function()
+    while task.wait(1) do
+        if Library.Unloaded then
+            break
+        end
+        SaveManager:Save(player.Name .. GameConfigName)
+    end
+end)
+
+-- Disable player idling
+for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+    v:Disable()
+end
+warn('[TEMPEST HUB] Loaded')
